@@ -23,8 +23,21 @@ public class Game {
      * or throw ArrayIndexOutOfBoundsException if the positions are outside the limits of
      * the board
      */
-    public boolean placeOnBoard(Object obj, int vertical, int horizontal) {
-        return false;
+    public boolean placeOnBoard(Object obj, int horizontal, int vertical) {
+        if (vertical >= gameBoard.length || horizontal >= gameBoard.length) {
+            throw new IllegalArgumentException("Should be smaller than " + gameBoard.length);
+        }
+
+        if (gameBoard[horizontal][vertical] != null) {
+            return false;
+        } else {
+            gameBoard[horizontal][vertical] = obj;
+        }
+
+        if (obj instanceof Player) {
+            ((Player) obj).setPosition(horizontal, vertical);
+        }
+        return true;
     }
 
     /**
@@ -34,8 +47,15 @@ public class Game {
      * @param horizontal position
      * @return the object to remove; null if the cell is empty
      */
-    public Object removeFromBoard(int vertical, int horizontal) {
-        return null;
+    public Object removeFromBoard(int horizontal, int vertical) {
+        if (vertical >= gameBoard.length || horizontal >= gameBoard.length) {
+            throw new IllegalArgumentException("Should be smaller than " + gameBoard.length);
+        }
+
+        Object toRemove = gameBoard[horizontal][vertical];
+        gameBoard[horizontal][vertical] = null;
+
+        return toRemove;
     }
 
     /*
@@ -44,7 +64,7 @@ public class Game {
 
              a cell is maximum 10 spaces size   . We put an artifact in the middle of the cell
      */
-    private final int CELL_DISPLAY_SIZE = 10;
+    private final int CELL_DISPLAY_SIZE = 12;
 
     private String generateSpaces(int number) {
         String spaces = "";
@@ -65,7 +85,18 @@ public class Game {
     public String displayBoard() {
         String toReturn = "";
 
+        /* generate head of table */
+        toReturn += generateSpaces(CELL_DISPLAY_SIZE);
         for (int i = 0; i < gameBoard.length; i++) {
+            toReturn += centerCell((i + 1) + " ");
+
+        }
+
+        toReturn += "\n";
+
+        // print game board contents
+        for (int i = 0; i < gameBoard.length; i++) {
+            toReturn += centerCell((i + 1) + "");
             for (int j = 0; j < gameBoard.length; j++) {
                 if (gameBoard[i][j] == null) {
                     toReturn += generateSpaces(CELL_DISPLAY_SIZE);
@@ -77,5 +108,28 @@ public class Game {
         }
 
         return toReturn;
+    }
+
+    /**
+     * Moves the object from the gameBoard to a new position
+     *
+     * @param player     to move
+     * @param horizontal position
+     * @param vertical   position
+     *                   return true if you can move
+     */
+    public boolean movePlayer(Player player, int horizontal, int vertical) {
+        if (vertical >= gameBoard.length || horizontal >= gameBoard.length) {
+            throw new IllegalArgumentException("Should be smaller than " + gameBoard.length);
+        }
+        if (gameBoard[horizontal][vertical] instanceof CollectibleItem) {
+            player.collect((CollectibleItem) gameBoard[horizontal][vertical]);
+            gameBoard[player.getHorizontal()][player.getVertical()] = null;
+            gameBoard[horizontal][vertical] = player;
+            player.setPosition(horizontal, vertical);
+            return true;
+        }
+
+        return false;
     }
 }

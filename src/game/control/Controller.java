@@ -28,5 +28,8 @@ public class Controller {
 
         System.out.println(game.displayBoard());
 
+        game.removeFromBoard(2, 3);
+        System.out.println(game.displayBoard());
+
     }
 }
