@@ -123,7 +123,13 @@ public class Game {
             throw new IllegalArgumentException("Should be smaller than " + gameBoard.length);
         }
         if (gameBoard[horizontal][vertical] instanceof CollectibleItem) {
-            player.collect((CollectibleItem) gameBoard[horizontal][vertical]);
+            player.collect( (CollectibleItem) gameBoard[horizontal][vertical] );
+            gameBoard[player.getHorizontal()][player.getVertical()] = null;
+            gameBoard[horizontal][vertical] = player;
+            player.setPosition(horizontal, vertical);
+            return true;
+        }
+        else if(gameBoard[horizontal][vertical] == null) {
             gameBoard[player.getHorizontal()][player.getVertical()] = null;
             gameBoard[horizontal][vertical] = player;
             player.setPosition(horizontal, vertical);

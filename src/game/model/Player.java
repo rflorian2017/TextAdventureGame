@@ -36,4 +36,9 @@ public class Player implements ILocalizable {
         this.horizontal = horizontal;
         this.vertical = vertical;
     }
+
+    public String getArtifacts() {
+        return artifacts.toString();
+
+    }
 }
