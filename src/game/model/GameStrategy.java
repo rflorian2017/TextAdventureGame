@@ -8,6 +8,7 @@ public class GameStrategy {
     private static HashMap<String, List<String>> commandsMap; // e. g. move ; [east, west, north, south, up, down, right, left]
 
     static {
+        commandsMap = new HashMap<>();
         commandsMap.put("move", new ArrayList<>());
         List<String> possibleValuesForMove = new ArrayList<>();
         possibleValuesForMove.add("east");
@@ -33,14 +34,37 @@ public class GameStrategy {
     public static void processCommand(String command, Game game, Player player) {
 
         String[] commands = command.split(" ");
-        if(commandsMap.containsKey(commands[0])) {
+        if (commandsMap.containsKey(commands[0].toLowerCase())) {
             //game.movePlayer()
+            switch (commands[1].toLowerCase()) {
+                case "east":
+                case "right":
+                case "e":
+                case "r":
+                    game.movePlayer(player, player.getHorizontal(),
+                            player.getVertical() + 1);
+                    break;
+                case "west":
+                case "left":
+                case "w":
+                case "l":
+                    game.movePlayer(player, player.getHorizontal(), player.getVertical() - 1);
+                    break;
+                case "north":
+                case "up":
+                case "n":
+                case "u":
+                    game.movePlayer(player, player.getHorizontal() - 1, player.getVertical());
+                    break;
+                case "south":
+                case "down":
+                case "s":
+                case "d":
+                    game.movePlayer(player, player.getHorizontal() + 1, player.getVertical() - 1);
+                    break;
+
+            }
         }
-        //e.g move 2 5 -> commandsMap[0] = move, commandsMap[1] = 2, commandsMap[2] = 5
-        if(commands[0].equals("move")) {
-            game.movePlayer(player ,
-                    Integer.parseInt(commands[1]),
-                    Integer.parseInt(commands[2]));
-        }
+
     }
 }
