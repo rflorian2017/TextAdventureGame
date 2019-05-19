@@ -93,13 +93,22 @@ public class Game {
                 for (int i = 0; i < gameBoards.size(); i++) {
                     if (gameBoards.get(i).equals(connectedBoard)) {
                         currentBoardIndex = i;
+                        int newHorizontal = connectedBoard.getPortalHorizontal();
+                        int newVertical = connectedBoard.getPortalVertical();
+                        gameBoards.get(currentBoardIndex).placeOnBoard(player, newHorizontal, newVertical); // place player in the new position given by parameters
+                        player.setPosition(newHorizontal, newVertical);
                         break;
                     }
                 }
             }
 
-            gameBoards.get(currentBoardIndex).placeOnBoard(player, horizontal, vertical); // place player in the new position given by parameters
-            player.setPosition(horizontal, vertical);
+            else {
+                gameBoards.get(currentBoardIndex).placeOnBoard(player, horizontal, vertical); // place player in the new position given by parameters
+                player.setPosition(horizontal, vertical);
+            }
+
+
+
         }
 
         return playerCanMove;

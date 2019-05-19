@@ -60,7 +60,7 @@ public class GameStrategy {
                 case "down":
                 case "s":
                 case "d":
-                    game.movePlayer(player, player.getHorizontal() + 1, player.getVertical() - 1);
+                    game.movePlayer(player, player.getHorizontal() + 1, player.getVertical());
                     break;
 
             }
