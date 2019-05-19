@@ -37,9 +37,9 @@ public class GameStrategy {
         if (commandsMap.containsKey(commands[0].toLowerCase())) {
             //game.movePlayer()
             switch (commands[1].toLowerCase()) {
-                case "east":
-                case "right":
-                case "e":
+                case "east": // fallthrough
+                case "right": // fallthrough
+                case "e": // fallthrough
                 case "r":
                     game.movePlayer(player, player.getHorizontal(),
                             player.getVertical() + 1);

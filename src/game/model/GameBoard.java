@@ -1,16 +1,27 @@
 package game.model;
 
+import java.util.*;
+
 public class GameBoard {
+    private static int lastId = 0; // static field is incremented at each creation of a new GameBoard Object
+
+    private int uniqueId; // id to uniquely identify a game board.
+
     private String boardName; // the name of the current "map" where a player can be at a time
 
     private int boardSize; // the game board will have an array of boardSize x boardSize
 
     private Object[][] gameBoardObjects; // the actual board where the artifacts/actors/player will rest
 
+    // e.g. < gameBoard: "forest", id = 1, < 1 (horizontal), 2 (vertical) > >
+    private Map<GameBoard, List<Integer>> connectedGameBoards;
+
     public GameBoard(String boardName, int boardSize) {
         this.boardName = boardName;
         this.boardSize = boardSize;
         gameBoardObjects = new Object[boardSize][boardSize];
+        connectedGameBoards = new HashMap<>();
+        uniqueId = lastId ++;
     }
 
     /**
@@ -117,5 +128,27 @@ public class GameBoard {
 
     public Object getGameBoardObject(int horizontal, int vertical) {
         return gameBoardObjects[horizontal][vertical];
+    }
+
+    /**
+     * Ads a board to the internal connected boards list
+     * @param gameBoard
+     */
+    public void addConnectedBoard(GameBoard gameBoard, int horizontal, int vertical) {
+        List<Integer> coordinates = new ArrayList<>();
+        coordinates.add(horizontal);
+        coordinates.add(vertical);
+
+        connectedGameBoards.put(gameBoard, coordinates );
+    }
+
+    public GameBoard isAPortalToOtherGameBoard(int horizontal, int vertical) {
+        for (Map.Entry<GameBoard, List<Integer>> entry : connectedGameBoards.entrySet()
+        ) {
+            if(entry.getValue().get(0) == horizontal && entry.getValue().get(1) == vertical ) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }

@@ -15,8 +15,14 @@ public class Game {
         //TODO: load game boards
 
         //just for tests - TODO: remove in production
-        GameBoard gameBoard = new GameBoard("forest", 10);
-        gameBoards.add(gameBoard);
+        GameBoard gameBoardForest = new GameBoard("forest", 10);
+        GameBoard gameBoardDungeon = new GameBoard("dungeon", 9);
+
+        gameBoards.add(gameBoardForest);
+        gameBoards.add(gameBoardDungeon);
+
+        gameBoardDungeon.addConnectedBoard(gameBoardForest, 0, 4);
+        gameBoardForest.addConnectedBoard(gameBoardDungeon, 9, 9);
 
         currentBoardIndex = 0;
     }
@@ -57,11 +63,15 @@ public class Game {
      *                   return true if you can move
      */
     public boolean movePlayer(Player player, int horizontal, int vertical) {
+
+        //TODO: Allow player and collectible to be on the same box
+
         if (vertical >= gameBoards.get(currentBoardIndex).getBoardSize() ||
                 horizontal >= gameBoards.get(currentBoardIndex).getBoardSize()) {
             throw new IllegalArgumentException("Should be smaller than " +
                     gameBoards.get(currentBoardIndex).getBoardSize());
         }
+
         boolean playerCanMove;// = false;
 
         if (gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical) == null) {
@@ -77,6 +87,17 @@ public class Game {
 
         if (playerCanMove) {
             gameBoards.get(currentBoardIndex).removeFromBoard(player.getHorizontal(), player.getVertical()); // remove player from his/hers old position
+
+            GameBoard connectedBoard = gameBoards.get(currentBoardIndex).isAPortalToOtherGameBoard(horizontal, vertical);
+            if (null != connectedBoard) {
+                for (int i = 0; i < gameBoards.size(); i++) {
+                    if (gameBoards.get(i).equals(connectedBoard)) {
+                        currentBoardIndex = i;
+                        break;
+                    }
+                }
+            }
+
             gameBoards.get(currentBoardIndex).placeOnBoard(player, horizontal, vertical); // place player in the new position given by parameters
             player.setPosition(horizontal, vertical);
         }
