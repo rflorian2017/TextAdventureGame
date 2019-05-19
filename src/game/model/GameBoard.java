@@ -13,9 +13,6 @@ public class GameBoard {
 
     private Object[][] gameBoardObjects; // the actual board where the artifacts/actors/player will rest
 
-    private int portalHorizontal;
-    private int portalVertical;
-
     // e.g. < gameBoard: "forest", id = 1, < 1 (horizontal), 2 (vertical) > >
     private Map<GameBoard, List<Integer>> connectedGameBoards;
 
@@ -149,22 +146,22 @@ public class GameBoard {
         for (Map.Entry<GameBoard, List<Integer>> entry : connectedGameBoards.entrySet()
         ) {
 
-            portalHorizontal = entry.getValue().get(0);
-            portalVertical = entry.getValue().get(1);
-
-            if( portalHorizontal == horizontal &&  portalVertical == vertical ) {
-
+            if( entry.getValue().get(0) == horizontal &&  entry.getValue().get(1) == vertical ) {
                 return entry.getKey();
             }
         }
         return null;
     }
 
-    public int getPortalHorizontal() {
-        return portalHorizontal;
+    public int getPortalHorizontal(GameBoard connectedBoard) {
+        return connectedBoard.getConnectedGameBoards().get(this).get(0);
     }
 
-    public int getPortalVertical() {
-        return portalVertical;
+    public int getPortalVertical(GameBoard connectedBoard) {
+        return connectedBoard.getConnectedGameBoards().get(this).get(1);
+    }
+
+    public Map<GameBoard, List<Integer>> getConnectedGameBoards() {
+        return connectedGameBoards;
     }
 }

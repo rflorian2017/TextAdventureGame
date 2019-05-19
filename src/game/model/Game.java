@@ -92,9 +92,13 @@ public class Game {
             if (null != connectedBoard) {
                 for (int i = 0; i < gameBoards.size(); i++) {
                     if (gameBoards.get(i).equals(connectedBoard)) {
+
+                        // see in the Map of the new board, the link to the old board and get coordinates
+                        // gameBoards.get(currentBoardIndex) .getHor (connectedBoard)
+
+                        int newHorizontal = gameBoards.get(currentBoardIndex).getPortalHorizontal(connectedBoard);
+                        int newVertical = gameBoards.get(currentBoardIndex).getPortalVertical(connectedBoard);
                         currentBoardIndex = i;
-                        int newHorizontal = connectedBoard.getPortalHorizontal();
-                        int newVertical = connectedBoard.getPortalVertical();
                         gameBoards.get(currentBoardIndex).placeOnBoard(player, newHorizontal, newVertical); // place player in the new position given by parameters
                         player.setPosition(newHorizontal, newVertical);
                         break;
