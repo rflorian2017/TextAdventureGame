@@ -110,4 +110,12 @@ public class GameBoard {
 
         return toReturn;
     }
+
+    public int getBoardSize() {
+        return boardSize;
+    }
+
+    public Object getGameBoardObject(int horizontal, int vertical) {
+        return gameBoardObjects[horizontal][vertical];
+    }
 }

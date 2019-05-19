@@ -5,13 +5,15 @@ import java.util.List;
 
 public class Game {
     private List<GameBoard> gameBoards;
+    private int currentBoardIndex;
 
     /**
      * Create a game object
-     *
      */
     public Game() {
         gameBoards = new ArrayList<>(); // initialize the list that will hold all the game boards of this game
+        //TODO: load game boards
+        currentBoardIndex = 0;
     }
 
 
@@ -27,7 +29,7 @@ public class Game {
      */
     public boolean placeOnBoard(Object obj, int horizontal, int vertical) {
 
-        return false;
+        return gameBoards.get(currentBoardIndex).placeOnBoard(obj, horizontal, vertical);
     }
 
     /**
@@ -38,7 +40,7 @@ public class Game {
      * @return the object to remove; null if the cell is empty
      */
     public Object removeFromBoard(int horizontal, int vertical) {
-        return null;
+        return gameBoards.get(currentBoardIndex).removeFromBoard(horizontal, vertical);
     }
 
     /**
@@ -50,17 +52,19 @@ public class Game {
      *                   return true if you can move
      */
     public boolean movePlayer(Player player, int horizontal, int vertical) {
-        if (vertical >= gameBoard.length || horizontal >= gameBoard.length) {
-            throw new IllegalArgumentException("Should be smaller than " + gameBoard.length);
+        if (vertical >= gameBoards.get(currentBoardIndex).getBoardSize() ||
+                horizontal >= gameBoards.get(currentBoardIndex).getBoardSize()) {
+            throw new IllegalArgumentException("Should be smaller than " +
+                    gameBoards.get(currentBoardIndex).getBoardSize());
         }
-        if (gameBoard[horizontal][vertical] instanceof CollectibleItem) {
-            player.collect( (CollectibleItem) gameBoard[horizontal][vertical] );
+        if (gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical) instanceof CollectibleItem) {
+            player.collect((CollectibleItem) gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical));
+            gameBoards.get(currentBoardIndex).removeFromBoard(player.getHorizontal(), player.getVertical());
             gameBoard[player.getHorizontal()][player.getVertical()] = null;
             gameBoard[horizontal][vertical] = player;
             player.setPosition(horizontal, vertical);
             return true;
-        }
-        else if(gameBoard[horizontal][vertical] == null) {
+        } else if (gameBoard[horizontal][vertical] == null) {
             gameBoard[player.getHorizontal()][player.getVertical()] = null;
             gameBoard[horizontal][vertical] = player;
             player.setPosition(horizontal, vertical);
