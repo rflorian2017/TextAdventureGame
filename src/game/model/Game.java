@@ -57,20 +57,24 @@ public class Game {
             throw new IllegalArgumentException("Should be smaller than " +
                     gameBoards.get(currentBoardIndex).getBoardSize());
         }
-        if (gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical) instanceof CollectibleItem) {
+        boolean returnType;// = false;
+
+        if (gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical) == null) {
+            returnType = true;
+        } else if (gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical) instanceof CollectibleItem) {
             player.collect((CollectibleItem) gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical));
-            gameBoards.get(currentBoardIndex).removeFromBoard(player.getHorizontal(), player.getVertical());
-            gameBoard[player.getHorizontal()][player.getVertical()] = null;
-            gameBoard[horizontal][vertical] = player;
-            player.setPosition(horizontal, vertical);
-            return true;
-        } else if (gameBoard[horizontal][vertical] == null) {
-            gameBoard[player.getHorizontal()][player.getVertical()] = null;
-            gameBoard[horizontal][vertical] = player;
-            player.setPosition(horizontal, vertical);
-            return true;
+            returnType = true;
+        } else {
+            // item is nor collectible, nor null
+            returnType = false;
         }
 
-        return false;
+        if (returnType) {
+            gameBoards.get(currentBoardIndex).removeFromBoard(player.getHorizontal(), player.getVertical());
+            gameBoards.get(currentBoardIndex).placeOnBoard(player, horizontal, vertical);
+            player.setPosition(horizontal, vertical);
+        }
+
+        return returnType;
     }
 }
