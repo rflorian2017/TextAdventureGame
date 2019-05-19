@@ -13,6 +13,11 @@ public class Game {
     public Game() {
         gameBoards = new ArrayList<>(); // initialize the list that will hold all the game boards of this game
         //TODO: load game boards
+
+        //just for tests - TODO: remove in production
+        GameBoard gameBoard = new GameBoard("forest", 10);
+        gameBoards.add(gameBoard);
+
         currentBoardIndex = 0;
     }
 
@@ -57,24 +62,29 @@ public class Game {
             throw new IllegalArgumentException("Should be smaller than " +
                     gameBoards.get(currentBoardIndex).getBoardSize());
         }
-        boolean returnType;// = false;
+        boolean playerCanMove;// = false;
 
         if (gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical) == null) {
-            returnType = true;
+            playerCanMove = true;
         } else if (gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical) instanceof CollectibleItem) {
             player.collect((CollectibleItem) gameBoards.get(currentBoardIndex).getGameBoardObject(horizontal, vertical));
-            returnType = true;
+            gameBoards.get(currentBoardIndex).removeFromBoard(horizontal, vertical); // remove collectible from board
+            playerCanMove = true;
         } else {
             // item is nor collectible, nor null
-            returnType = false;
+            playerCanMove = false;
         }
 
-        if (returnType) {
-            gameBoards.get(currentBoardIndex).removeFromBoard(player.getHorizontal(), player.getVertical());
-            gameBoards.get(currentBoardIndex).placeOnBoard(player, horizontal, vertical);
+        if (playerCanMove) {
+            gameBoards.get(currentBoardIndex).removeFromBoard(player.getHorizontal(), player.getVertical()); // remove player from his/hers old position
+            gameBoards.get(currentBoardIndex).placeOnBoard(player, horizontal, vertical); // place player in the new position given by parameters
             player.setPosition(horizontal, vertical);
         }
 
-        return returnType;
+        return playerCanMove;
+    }
+
+    public String displayBoard() {
+        return gameBoards.get(currentBoardIndex).toString();
     }
 }

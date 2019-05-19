@@ -15,7 +15,7 @@ public class Controller {
     private Player player;
 
     public void initialize() {
-        game = new Game(10);
+        game = new Game();
         Key key = new Key();
         Door door = new Door(key);
         player = new Player();
