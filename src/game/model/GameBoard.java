@@ -164,4 +164,16 @@ public class GameBoard {
     public Map<GameBoard, List<Integer>> getConnectedGameBoards() {
         return connectedGameBoards;
     }
+
+    public int getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(int uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    public String getName() {
+        return this.boardName;
+    }
 }

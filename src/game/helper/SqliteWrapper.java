@@ -2,13 +2,10 @@ package game.helper;
 
 
 import game.constants.ApplicationConstants;
+import game.model.GameBoard;
 
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 public class SqliteWrapper {
 
@@ -24,26 +21,6 @@ public class SqliteWrapper {
 
         return conn;
 
-    }
-
-    @Deprecated
-    private String createTableCreationString(String table, HashMap<String, List<String>> columns) {
-        String sql = "CREATE TABLE IF NOT EXISTS " + table + "(";
-        /* the hash map contains the column name as key and the properties as the values
-        e.g.: Username, (TEXT, UNIQUE, NOT NULL) */
-        // outer loop !!!!!
-        for (String columnName : columns.keySet()) {
-            sql += columnName + " ";
-            for (String columnProperty : columns.get(columnName)) {
-                sql += columnProperty + " ";
-            }
-            sql += ",";
-        }
-        //remove the last comma from the sql string, because we do not check in the outer for loop for the last element
-        sql = sql.substring(0, sql.length() - 2); // -1 is the last character
-        sql += ");";
-
-        return sql;
     }
 
     private void createTable(String sql) {
@@ -67,10 +44,11 @@ public class SqliteWrapper {
         createTable(sql);
     }
 
-    private void createTableCategories() {
-        String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_CATEGORIES +
-                "(" + ApplicationConstants.TABLE_CATEGORIES_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                ApplicationConstants.TABLE_CATEGORIES_NAME_COLUMN + " TEXT UNIQUE NOT NULL" +
+    private void createTableGameBoards() {
+        String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_GAME_BOARDS +
+                "(" + ApplicationConstants.TABLE_GAME_BOARDS_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                ApplicationConstants.TABLE_GAME_BOARDS_NAME_COLUMN + " TEXT NOT NULL," +
+                ApplicationConstants.TABLE_GAME_BOARDS_SIZE_COLUMN + " INTEGER NOT NULL" +
                 ");";
         createTable(sql);
     }
@@ -85,10 +63,28 @@ public class SqliteWrapper {
         createTable(sql);
     }
 
+    public void insertGameBoard(GameBoard gameBoard) {
+        String sql = "INSERT INTO " + ApplicationConstants.TABLE_GAME_BOARDS +
+                "(" +
+                ApplicationConstants.TABLE_GAME_BOARDS_NAME_COLUMN + "," +
+                ApplicationConstants.TABLE_GAME_BOARDS_SIZE_COLUMN + ")" +
+                "VALUES(?,?);";
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, gameBoard.getName());
+            statement.setInt(2, gameBoard.getBoardSize());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void createAllTables() {
-        createTablePlayers();
-        createTableCategories();
-        createTableWords();
+        //createTablePlayers();
+        createTableGameBoards();
     }
 
 }
