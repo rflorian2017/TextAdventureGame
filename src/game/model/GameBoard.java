@@ -176,4 +176,26 @@ public class GameBoard {
     public String getName() {
         return this.boardName;
     }
+
+    public int artifactHorizontalPosition(Artifact artifact) {
+
+        for (int horizontal = 0; horizontal < boardSize; horizontal++)
+            for (int vertical = 0; vertical < boardSize; vertical++) {
+                if (gameBoardObjects.equals(artifact)) {
+                    return horizontal;
+                }
+            }
+        return -1;
+    }
+
+    public int artifactVerticalPosition(Artifact artifact) {
+
+        for (int horizontal = 0; horizontal < boardSize; horizontal++)
+            for (int vertical = 0; vertical < boardSize; vertical++) {
+                if (gameBoardObjects.equals(artifact)) {
+                    return vertical;
+                }
+            }
+        return -1;
+    }
 }

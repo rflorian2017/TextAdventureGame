@@ -9,6 +9,8 @@ import game.model.Player;
 
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SqliteWrapper {
 
@@ -110,7 +112,7 @@ public class SqliteWrapper {
         createTable(sql);
     }
 
-    public void insertArtifactsPosition(Artifact artifact) {
+    public void insertArtifactsPosition(Artifact artifact, GameBoard gameBoard) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_ARTIFACTS_POSITION +
                 "(" + ApplicationConstants.TABLE_ARTIFACTS_NAME + ","
                 + ApplicationConstants.TABLE_ARTIFACTS_ID + "," +
@@ -122,8 +124,8 @@ public class SqliteWrapper {
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, artifact.getName());
             statement.setInt(2, artifact.getId());
-            statement.setInt(3, artifact.getHorizontal());
-            statement.setInt(4, artifact.getVertical());
+            statement.setInt(3, gameBoard.artifactVerticalPosition(artifact));
+            statement.setInt(4, gameBoard.artifactHorizontalPosition(artifact));
             statement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -153,6 +155,25 @@ public class SqliteWrapper {
                 ApplicationConstants.TABLE_PLAYER_NAME_COLUMN + " TEXT  NOT NULL" +
                 ");";
         createTable(sql);
+    }
+
+    public List<Player> getAllPlayers() {
+        String sql = "SELECT * FROM " + ApplicationConstants.TABLE_PLAYERS;
+        List<Player> players = new ArrayList<>();
+        Connection conn = this.connect();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                players.add(new Player(resultSet.getString(ApplicationConstants.TABLE_PLAYER_NAME_COLUMN),
+                        resultSet.getInt(ApplicationConstants.TABLE_PLAYER_ID_COLUMN)
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return players;
     }
 
     public void createAllTables() {

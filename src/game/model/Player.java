@@ -15,6 +15,24 @@ public class Player implements ILocalizable {
         return vertical;
     }
 
+    private int ID;
+
+    private String name;
+
+    public Player(String name, int ID) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return
+                this.name;
+    }
+
+    public int getID() {
+        return this.ID;
+    }
+
+
     /**
      * items that the player can collect
      */
