@@ -26,11 +26,22 @@ public class ApplicationConstants {
                     PATH_SEPARATOR +
                     DATABASE_NAME;
 
-    // region table players
-    public static final String TABLE_PLAYERS = "players";
-    public static final String TABLE_PLAYERS_USERNAME_COLUMN = "username";
-    public static final String TABLE_PLAYERS_PASSWORD_COLUMN = "password";
-    // endregion
+
+    //region table artifacts
+    public static final String TABLE_GAME_ARTIFACTS="game_artifacts";
+    public static final String TABLE_GAME_ARTIFACTS_ID_COLUMN="id";
+    public static final String TABLE_GAME_ARTIFACTS_NAME_COLUMN="name";
+    public static final String TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN="collectible";
+
+    //endregion
+
+    //region table artifacts_position
+    public static final String TABLE_ARTIFACTS_POSITION="artifacts_position";
+    public static final String TABLE_ARTIFACTS_HORIZONTAL_POSITION="horizontal";
+    public static final String TABLE_ARTIFACTS_VERTICAL_POSITION="vertical";
+    public static final String TABLE_ARTIFACTS_NAME = "name";
+    public static final String TABLE_ARTIFACTS_ID = "id";
+    //endregion
 
     // region table Game boards
     public static final String TABLE_GAME_BOARDS = "game_boards";
@@ -39,12 +50,12 @@ public class ApplicationConstants {
     public static final String TABLE_GAME_BOARDS_SIZE_COLUMN = "board_size";
     // endregion
 
-    // region table words
-    public static final String TABLE_WORDS = "words";
-    public static final String TABLE_WORDS_ID_COLUMN = "id";
-    public static final String TABLE_WORDS_NAME_COLUMN = "name";
-    public static final String TABLE_WORDS_HINT_COLUMN = "hint";
-    public static final String TABLE_WORDS_CATEGORY_ID_COLUMN = "category_id";
+    // region table player
+    public static final String TABLE_PLAYER_NAME = "players";
+    public static final String TABLE_PLAYER_ID_COLUMN = "id";
+    public static final String TABLE_PLAYER_NAME_COLUMN = "name";
+    public static final String TABLE_PLAYERS = "players";
+    public static final String TABLE_PLAYERS_NAME_COLUMN = "name";
 
     // endregion
 

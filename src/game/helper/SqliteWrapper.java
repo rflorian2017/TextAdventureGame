@@ -2,7 +2,10 @@ package game.helper;
 
 
 import game.constants.ApplicationConstants;
+import game.model.Artifact;
+import game.model.CollectibleItem;
 import game.model.GameBoard;
+import game.model.Player;
 
 
 import java.sql.*;
@@ -35,31 +38,12 @@ public class SqliteWrapper {
         }
     }
 
-    private void createTablePlayers() {
-        String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_PLAYERS +
-                "(" +
-                ApplicationConstants.TABLE_PLAYERS_USERNAME_COLUMN + " TEXT UNIQUE NOT NULL, " +
-                ApplicationConstants.TABLE_PLAYERS_PASSWORD_COLUMN + " TEXT NOT NULL" +
-                ");";
-        createTable(sql);
-    }
-
     private void createTableGameBoards() {
         String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_GAME_BOARDS +
                 "(" + ApplicationConstants.TABLE_GAME_BOARDS_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ApplicationConstants.TABLE_GAME_BOARDS_NAME_COLUMN + " TEXT NOT NULL," +
                 ApplicationConstants.TABLE_GAME_BOARDS_SIZE_COLUMN + " INTEGER NOT NULL" +
                 ");";
-        createTable(sql);
-    }
-
-    private void createTableWords() {
-        String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_WORDS +
-                "(" + ApplicationConstants.TABLE_WORDS_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                ApplicationConstants.TABLE_WORDS_NAME_COLUMN + " TEXT UNIQUE NOT NULL," +
-                ApplicationConstants.TABLE_WORDS_HINT_COLUMN + " TEXT," +
-                ApplicationConstants.TABLE_WORDS_CATEGORY_ID_COLUMN + " INTEGER NOT NULL" +
-                ")";
         createTable(sql);
     }
 
@@ -82,9 +66,100 @@ public class SqliteWrapper {
 
     }
 
+    private void createTableArtifacts() {
+        String sql = "CREATE TABLE IF NOT EXISTS " +
+                ApplicationConstants.TABLE_GAME_ARTIFACTS +
+                "(" + ApplicationConstants.TABLE_GAME_ARTIFACTS_ID_COLUMN + " INTEGER UNIQUE NOT NULL, "+
+
+                ApplicationConstants.TABLE_GAME_ARTIFACTS_NAME_COLUMN + " TEXT NOT NULL, " +
+                ApplicationConstants.TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN + " INTEGER NOT NULL "+
+
+                ");";
+        createTable(sql);
+    }
+
+    public void insertArtifact(Artifact artifact) {
+        String sql = "INSERT INTO " + ApplicationConstants.TABLE_GAME_ARTIFACTS +
+                "("+ ApplicationConstants.TABLE_GAME_ARTIFACTS_ID_COLUMN +","
+                + ApplicationConstants.TABLE_GAME_ARTIFACTS_NAME_COLUMN +","
+                +ApplicationConstants.TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN+ ")" +
+                "VALUES(?,?,?);";
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, artifact.getId());
+            statement.setString(2,artifact.getClass().getName());
+            statement.setInt(3,(artifact instanceof CollectibleItem)?1:0);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void createArtifactsPosition(){
+        String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_ARTIFACTS_POSITION +
+                "("+
+                ApplicationConstants.TABLE_ARTIFACTS_NAME + " TEXT NOT NULL,"
+                + ApplicationConstants.TABLE_ARTIFACTS_ID + " INTEGER NOT NULL, "
+                +  ApplicationConstants.TABLE_ARTIFACTS_HORIZONTAL_POSITION+ " INTEGER NOT NULL,"
+                +ApplicationConstants.TABLE_ARTIFACTS_VERTICAL_POSITION +" INTEGER NOT NULL);"
+                ;
+        createTable(sql);
+    }
+
+    public void insertArtifactsPosition(Artifact artifact) {
+        String sql = "INSERT INTO " + ApplicationConstants.TABLE_ARTIFACTS_POSITION +
+                "(" + ApplicationConstants.TABLE_ARTIFACTS_NAME + ","
+                + ApplicationConstants.TABLE_ARTIFACTS_ID + "," +
+                ApplicationConstants.TABLE_ARTIFACTS_HORIZONTAL_POSITION + "," +
+                ApplicationConstants.TABLE_ARTIFACTS_VERTICAL_POSITION+ ")" +
+                " VALUES(?,?,?,?);";
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, artifact.getName());
+            statement.setInt(2, artifact.getId());
+            statement.setInt(3, artifact.getHorizontal());
+            statement.setInt(4, artifact.getVertical());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void insertPlayer(Player player){
+        String sql = "INSERT INTO " + ApplicationConstants.TABLE_PLAYERS +
+                "(" + ApplicationConstants.TABLE_PLAYERS_NAME_COLUMN + ","  + ApplicationConstants.TABLE_PLAYER_ID_COLUMN +
+                ")" +
+                " VALUES(?,?);";
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1,player.getName());
+            statement.setInt(2,player.getID());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void createTablePlayers() {
+        String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_PLAYER_NAME +
+                "(" +
+                ApplicationConstants.TABLE_PLAYER_ID_COLUMN + " INTEGER NOT NULL," +
+                ApplicationConstants.TABLE_PLAYER_NAME_COLUMN + " TEXT  NOT NULL" +
+                ");";
+        createTable(sql);
+    }
+
     public void createAllTables() {
-        //createTablePlayers();
+        createTablePlayers();
         createTableGameBoards();
+        createTableArtifacts();
+        createArtifactsPosition();
     }
 
 }
