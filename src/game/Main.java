@@ -1,6 +1,6 @@
 package game;
 
-import game.helper.SqliteWrapper;
+import game.helper.sql.SqliteWrapper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

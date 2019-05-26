@@ -51,11 +51,12 @@ public class ApplicationConstants {
     // endregion
 
     // region table player
-    public static final String TABLE_PLAYER_NAME = "players";
     public static final String TABLE_PLAYER_ID_COLUMN = "id";
     public static final String TABLE_PLAYER_NAME_COLUMN = "name";
     public static final String TABLE_PLAYERS = "players";
-    public static final String TABLE_PLAYERS_NAME_COLUMN = "name";
+    public static final String TABLE_PLAYER_GAMEBOARD_ID = "gameboard_id";
+    public static final String TABLE_PLAYER_HORIZONTAL = "horizontal";
+    public static final String TABLE_PLAYER_VERTICAL = "vertical";
 
     // endregion
 
