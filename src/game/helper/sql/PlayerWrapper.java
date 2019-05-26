@@ -2,6 +2,7 @@ package game.helper.sql;
 
 import game.constants.ApplicationConstants;
 import game.model.Player;
+import game.model.gamedata.GameBoard;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,16 +10,23 @@ import java.util.List;
 
 public class PlayerWrapper extends SqliteWrapper {
 
-    public void insert(Player player) {
+    public void insert(Player player, int gameBoardId) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_PLAYERS +
-                "(" + ApplicationConstants.TABLE_PLAYERS_NAME_COLUMN + "," + ApplicationConstants.TABLE_PLAYER_ID_COLUMN +
+                "(" + ApplicationConstants.TABLE_PLAYER_NAME_COLUMN + ","
+                + ApplicationConstants.TABLE_PLAYER_ID_COLUMN + "," +
+                ApplicationConstants.TABLE_PLAYER_HORIZONTAL + "," +
+                ApplicationConstants.TABLE_PLAYER_VERTICAL + "," +
+                ApplicationConstants.TABLE_PLAYER_GAMEBOARD_ID +
                 ")" +
-                " VALUES(?,?);";
+                " VALUES(?,?,?,?,?);";
         try {
             Connection conn = this.connect();
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, player.getName());
             statement.setInt(2, player.getID());
+            statement.setInt(3, player.getHorizontal());
+            statement.setInt(4, player.getVertical());
+            statement.setInt(5, gameBoardId);
             statement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -81,6 +81,8 @@ public class Controller {
 
         }
 
+        playerWrapper.insert(player, game.getCurrentBoardIndex());
+
 
     }
 }
