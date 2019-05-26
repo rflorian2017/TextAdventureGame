@@ -54,9 +54,12 @@ public class PlayerWrapper extends SqliteWrapper {
             ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                players.add(new Player(resultSet.getString(ApplicationConstants.TABLE_PLAYER_NAME_COLUMN),
-                        resultSet.getInt(ApplicationConstants.TABLE_PLAYER_ID_COLUMN)
-                ));
+                Player player = new Player(resultSet.getString(ApplicationConstants.TABLE_PLAYER_NAME_COLUMN),
+                        resultSet.getInt(ApplicationConstants.TABLE_PLAYER_ID_COLUMN));
+                player.setPosition(resultSet.getInt(ApplicationConstants.TABLE_PLAYER_HORIZONTAL),
+                        resultSet.getInt(ApplicationConstants.TABLE_PLAYER_VERTICAL));
+                players.add(player
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package game.model.gamedata;
 
 
+import game.helper.sql.GameBoardWrapper;
 import game.model.CollectibleItem;
 import game.model.Player;
 
@@ -16,19 +17,28 @@ public class Game {
      */
     public Game() {
         gameBoards = new ArrayList<>(); // initialize the list that will hold all the game boards of this game
-        //TODO: load game boards
+        //COMPLETED: load game boards
+        // get gameboards from Database
+        GameBoardWrapper gameBoardWrapper = new GameBoardWrapper();
 
-        //just for tests - TODO: remove in production
-        GameBoard gameBoardForest = new GameBoard("forest", 10);
-        GameBoard gameBoardDungeon = new GameBoard("dungeon", 9);
+        gameBoards = gameBoardWrapper.getAllGameBoards();
 
-        gameBoards.add(gameBoardForest);
-        gameBoards.add(gameBoardDungeon);
+        if(gameBoards.size() == 0) {
+            //just for tests - COMPLETED: remove in production
+            GameBoard gameBoardForest = new GameBoard("forest", 10);
+            GameBoard gameBoardDungeon = new GameBoard("dungeon", 9);
 
-        gameBoardDungeon.addConnectedBoard(gameBoardForest, 0, 4);
-        gameBoardForest.addConnectedBoard(gameBoardDungeon, 9, 9);
+            gameBoards.add(gameBoardForest);
+            gameBoards.add(gameBoardDungeon);
 
-        currentBoardIndex = 0;
+            gameBoardDungeon.addConnectedBoard(gameBoardForest, 0, 4);
+            gameBoardForest.addConnectedBoard(gameBoardDungeon, 9, 9);
+
+            currentBoardIndex = 0;
+        }
+        else  {
+
+        }
     }
 
 

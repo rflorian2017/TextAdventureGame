@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,13 +25,46 @@ public class Controller {
 
     public void initialize() {
         game = new Game();
-        Key key = new Key();
-        Door door = new Door(key);
-        player = new Player();
 
-        game.placeOnBoard(key, 2, 3);
-        game.placeOnBoard(door, 1, 5);
-        game.placeOnBoard(player, 5, 5);
+
+        List<Artifact> artifacts = new ArtifactWrapper().getAllArtifacts();
+        Map<Integer, List<Integer>> artifactsPositions =
+                new ArtifactPositionWrapper().getAllArtifactsPositions();
+         if(artifacts.size() == 0) {
+            Key key = new Key();
+            Door door = new Door(key);
+
+            game.placeOnBoard(key, 2, 3);
+            game.placeOnBoard(door, 1, 5);
+
+        }
+
+        else {
+            for (Artifact artifact : artifacts
+                 ) {
+                game.placeOnBoard(artifact,
+                        artifactsPositions.get(artifact.getId()).get(1),
+                        artifactsPositions.get(artifact.getId()).get(0));
+            }
+        }
+
+        List<Player> players = new PlayerWrapper().getAllPlayers();
+        if(players.size() == 0) {
+
+            player = new Player();
+            game.placeOnBoard(player, 5, 5);
+        }
+
+        else {
+            for (Player player_: players
+                 ) {
+                game.placeOnBoard(player_, player_.getHorizontal(),
+                        player_.getVertical());
+            }
+        }
+
+
+
 
 
         System.out.println(game.displayBoard());

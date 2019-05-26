@@ -3,9 +3,9 @@ package game.helper.sql;
 import game.constants.ApplicationConstants;
 import game.model.gamedata.GameBoard;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameBoardWrapper extends SqliteWrapper {
 
@@ -40,5 +40,25 @@ public class GameBoardWrapper extends SqliteWrapper {
     @Override
     public void createTable() {
         createTableGameBoards();
+    }
+
+    public List<GameBoard> getAllGameBoards() {
+        String sql = "SELECT * FROM " + ApplicationConstants.TABLE_GAME_BOARDS;
+        List<GameBoard> gameBoards = new ArrayList<>();
+        Connection conn = this.connect();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                gameBoards.add(new GameBoard(
+                        resultSet.getString(ApplicationConstants.TABLE_GAME_BOARDS_NAME_COLUMN),
+                        resultSet.getInt(ApplicationConstants.TABLE_GAME_BOARDS_SIZE_COLUMN)
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gameBoards;
     }
 }

@@ -24,8 +24,7 @@ public class Player implements ILocalizable {
     }
 
     public String getName() {
-        return
-                this.name;
+        return this.getClass().getSimpleName();
     }
 
     public int getID() {
