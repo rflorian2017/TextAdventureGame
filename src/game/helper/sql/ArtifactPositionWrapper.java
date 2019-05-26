@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ArtifactPositionWrapper extends SqliteWrapper {
-    public void createArtifactsPosition() {
+    private void createArtifactsPosition() {
         String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_ARTIFACTS_POSITION +
                 "("
                 + ApplicationConstants.TABLE_ARTIFACTS_ID + " INTEGER NOT NULL, "
