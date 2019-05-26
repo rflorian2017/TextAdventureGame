@@ -20,7 +20,9 @@ public class Main extends Application {
     }
 
 
+
     public static void main(String[] args) {
+
         // create the database and all the tables in the app
         SqliteWrapper wrapper = new SqliteWrapper();
         wrapper.createAllTables();

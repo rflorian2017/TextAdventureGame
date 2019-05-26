@@ -19,6 +19,12 @@ public class Artifact {
         return this.getClass().getSimpleName();
     }
 
+    public Artifact(int id, String name){
+        id++;
+        this.id = id ;
+
+    }
+
 
     @Override
     public String toString() {

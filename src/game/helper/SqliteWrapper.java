@@ -176,6 +176,26 @@ public class SqliteWrapper {
         return players;
     }
 
+    public List<Artifact> getAllArtifacts() {
+        String sql = "SELECT * FROM" + ApplicationConstants.TABLE_GAME_ARTIFACTS;
+        List<Artifact> artifacts = new ArrayList<>();
+        Connection conn = this.connect();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                artifacts.add(new Artifact(
+                        resultSet.getInt(ApplicationConstants.TABLE_GAME_ARTIFACTS_ID_COLUMN),
+                        resultSet.getString(ApplicationConstants.TABLE_GAME_ARTIFACTS_NAME_COLUMN)
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return artifacts;
+    }
+
     public void createAllTables() {
         createTablePlayers();
         createTableGameBoards();
