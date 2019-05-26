@@ -1,10 +1,15 @@
 package game.control;
 
+import game.helper.SqliteWrapper;
 import game.model.*;
+import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import java.util.List;
+import java.util.Map;
 
 public class Controller {
 
@@ -54,5 +59,21 @@ public class Controller {
             txtFieldCommand.clear();
             txtAreaGameOutput.appendText(game.displayBoard() + "\n");
         }
+    }
+
+    public void saveGameProgress(ActionEvent event) {
+        SqliteWrapper sqliteWrapper = new SqliteWrapper();
+        for(int i=0; i<game.getGameBoards().size(); i++) {
+            GameBoard gameBoard = game.getGameBoards().get(i);
+            sqliteWrapper.insertGameBoard(gameBoard);
+            for (Map.Entry<Artifact, List<Integer>> entry : gameBoard.getArtifactsPositions().entrySet())
+            {
+                sqliteWrapper.insertArtifact(entry.getKey());
+                sqliteWrapper.insertArtifactsPosition(entry.getKey(), gameBoard);
+            }
+
+        }
+
+
     }
 }

@@ -1,6 +1,5 @@
 package game.model;
 
-import game.helper.SqliteWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,6 @@ public class Game {
         //just for tests - TODO: remove in production
         GameBoard gameBoardForest = new GameBoard("forest", 10);
         GameBoard gameBoardDungeon = new GameBoard("dungeon", 9);
-        SqliteWrapper wrapper = new SqliteWrapper();
-        wrapper.insertGameBoard(gameBoardDungeon);
 
         gameBoards.add(gameBoardForest);
         gameBoards.add(gameBoardDungeon);
@@ -125,4 +122,14 @@ public class Game {
     public String displayBoard() {
         return gameBoards.get(currentBoardIndex).toString();
     }
+
+    public int getCurrentBoardIndex() {
+        return currentBoardIndex;
+    }
+
+    public List<GameBoard> getGameBoards() {
+        return gameBoards;
+    }
+
+
 }

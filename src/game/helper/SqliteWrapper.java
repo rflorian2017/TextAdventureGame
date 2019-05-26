@@ -10,7 +10,9 @@ import game.model.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SqliteWrapper {
 
@@ -71,10 +73,10 @@ public class SqliteWrapper {
     private void createTableArtifacts() {
         String sql = "CREATE TABLE IF NOT EXISTS " +
                 ApplicationConstants.TABLE_GAME_ARTIFACTS +
-                "(" + ApplicationConstants.TABLE_GAME_ARTIFACTS_ID_COLUMN + " INTEGER UNIQUE NOT NULL, "+
+                "(" + ApplicationConstants.TABLE_GAME_ARTIFACTS_ID_COLUMN + " INTEGER UNIQUE NOT NULL, " +
 
                 ApplicationConstants.TABLE_GAME_ARTIFACTS_NAME_COLUMN + " TEXT NOT NULL, " +
-                ApplicationConstants.TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN + " INTEGER NOT NULL "+
+                ApplicationConstants.TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN + " INTEGER NOT NULL " +
 
                 ");";
         createTable(sql);
@@ -82,16 +84,16 @@ public class SqliteWrapper {
 
     public void insertArtifact(Artifact artifact) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_GAME_ARTIFACTS +
-                "("+ ApplicationConstants.TABLE_GAME_ARTIFACTS_ID_COLUMN +","
-                + ApplicationConstants.TABLE_GAME_ARTIFACTS_NAME_COLUMN +","
-                +ApplicationConstants.TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN+ ")" +
+                "(" + ApplicationConstants.TABLE_GAME_ARTIFACTS_ID_COLUMN + ","
+                + ApplicationConstants.TABLE_GAME_ARTIFACTS_NAME_COLUMN + ","
+                + ApplicationConstants.TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN + ")" +
                 "VALUES(?,?,?);";
         try {
             Connection conn = this.connect();
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, artifact.getId());
-            statement.setString(2,artifact.getClass().getName());
-            statement.setInt(3,(artifact instanceof CollectibleItem)?1:0);
+            statement.setString(2, artifact.getClass().getName());
+            statement.setInt(3, (artifact instanceof CollectibleItem) ? 1 : 0);
 
             statement.executeUpdate();
 
@@ -101,47 +103,47 @@ public class SqliteWrapper {
 
     }
 
-    public void createArtifactsPosition(){
+    public void createArtifactsPosition() {
         String sql = "CREATE TABLE IF NOT EXISTS " + ApplicationConstants.TABLE_ARTIFACTS_POSITION +
-                "("+
-                ApplicationConstants.TABLE_ARTIFACTS_NAME + " TEXT NOT NULL,"
+                "("
                 + ApplicationConstants.TABLE_ARTIFACTS_ID + " INTEGER NOT NULL, "
-                +  ApplicationConstants.TABLE_ARTIFACTS_HORIZONTAL_POSITION+ " INTEGER NOT NULL,"
-                +ApplicationConstants.TABLE_ARTIFACTS_VERTICAL_POSITION +" INTEGER NOT NULL);"
-                ;
+                + ApplicationConstants.TABLE_ARTIFACTS_HORIZONTAL_POSITION + " INTEGER NOT NULL,"
+                + ApplicationConstants.TABLE_ARTIFACTS_VERTICAL_POSITION + " INTEGER NOT NULL,"
+                + ApplicationConstants.TABLE_ARTIFACTS_GAMEBOARD_ID + " INTEGER NOT NULL);";
         createTable(sql);
     }
 
     public void insertArtifactsPosition(Artifact artifact, GameBoard gameBoard) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_ARTIFACTS_POSITION +
-                "(" + ApplicationConstants.TABLE_ARTIFACTS_NAME + ","
+                "("
                 + ApplicationConstants.TABLE_ARTIFACTS_ID + "," +
                 ApplicationConstants.TABLE_ARTIFACTS_HORIZONTAL_POSITION + "," +
-                ApplicationConstants.TABLE_ARTIFACTS_VERTICAL_POSITION+ ")" +
+                ApplicationConstants.TABLE_ARTIFACTS_VERTICAL_POSITION + "," +
+                ApplicationConstants.TABLE_ARTIFACTS_GAMEBOARD_ID + ")" +
                 " VALUES(?,?,?,?);";
         try {
             Connection conn = this.connect();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, artifact.getName());
-            statement.setInt(2, artifact.getId());
-            statement.setInt(3, gameBoard.artifactVerticalPosition(artifact));
-            statement.setInt(4, gameBoard.artifactHorizontalPosition(artifact));
+            statement.setInt(1, artifact.getId());
+            statement.setInt(2, gameBoard.artifactVerticalPosition(artifact));
+            statement.setInt(3, gameBoard.artifactHorizontalPosition(artifact));
+            statement.setInt(4, gameBoard.getUniqueId());
             statement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void insertPlayer(Player player){
+    public void insertPlayer(Player player) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_PLAYERS +
-                "(" + ApplicationConstants.TABLE_PLAYERS_NAME_COLUMN + ","  + ApplicationConstants.TABLE_PLAYER_ID_COLUMN +
+                "(" + ApplicationConstants.TABLE_PLAYERS_NAME_COLUMN + "," + ApplicationConstants.TABLE_PLAYER_ID_COLUMN +
                 ")" +
                 " VALUES(?,?);";
         try {
             Connection conn = this.connect();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,player.getName());
-            statement.setInt(2,player.getID());
+            statement.setString(1, player.getName());
+            statement.setInt(2, player.getID());
             statement.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -201,6 +203,30 @@ public class SqliteWrapper {
         createTableGameBoards();
         createTableArtifacts();
         createArtifactsPosition();
+    }
+
+    public Map<Integer, List<Integer>> getAllArtifactsPositions() {
+        String sql = "SELECT * FROM " + ApplicationConstants.TABLE_ARTIFACTS_POSITION ;
+        List<Artifact> artifacts = new ArrayList<>();
+        List<GameBoard> gameBoards = new ArrayList<>();
+        Map<Integer, List<Integer>> artifactsPositions = new HashMap<>();
+
+        Connection conn = this.connect();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                List<Integer> coordinates = new ArrayList<>();
+                coordinates.add(resultSet.getInt(ApplicationConstants.TABLE_ARTIFACTS_HORIZONTAL_POSITION));
+                coordinates.add(resultSet.getInt(ApplicationConstants.TABLE_ARTIFACTS_VERTICAL_POSITION));
+
+                artifactsPositions.put(resultSet.getInt(ApplicationConstants.TABLE_ARTIFACTS_ID ), coordinates);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return artifactsPositions;
     }
 
 }

@@ -26,6 +26,7 @@ public class Main extends Application {
         // create the database and all the tables in the app
         SqliteWrapper wrapper = new SqliteWrapper();
         wrapper.createAllTables();
+        wrapper.getAllArtifactsPositions();
 
         launch(args);
     }

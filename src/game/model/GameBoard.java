@@ -181,7 +181,8 @@ public class GameBoard {
 
         for (int horizontal = 0; horizontal < boardSize; horizontal++)
             for (int vertical = 0; vertical < boardSize; vertical++) {
-                if (gameBoardObjects.equals(artifact)) {
+                if (gameBoardObjects[horizontal][vertical] !=null &&
+                        gameBoardObjects[horizontal][vertical].equals(artifact)) {
                     return horizontal;
                 }
             }
@@ -192,10 +193,30 @@ public class GameBoard {
 
         for (int horizontal = 0; horizontal < boardSize; horizontal++)
             for (int vertical = 0; vertical < boardSize; vertical++) {
-                if (gameBoardObjects.equals(artifact)) {
+                if (gameBoardObjects[horizontal][vertical] !=null &&
+                        gameBoardObjects[horizontal][vertical].equals(artifact)) {
                     return vertical;
                 }
             }
         return -1;
     }
+
+    public Map<Artifact, List<Integer>> getArtifactsPositions() {
+        HashMap<Artifact, List<Integer>> artifactListHashMap = new HashMap<>();
+
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (gameBoardObjects[i][j] instanceof Artifact) {
+                    List<Integer> coordinates = new ArrayList<>();
+                    coordinates.add(i); //horizontal
+                    coordinates.add(j); // vertical
+
+                    artifactListHashMap.put((Artifact) gameBoardObjects[i][j], coordinates);
+                }
+            }
+        }
+        return artifactListHashMap;
+    }
+
+
 }

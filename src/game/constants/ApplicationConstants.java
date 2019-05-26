@@ -39,8 +39,8 @@ public class ApplicationConstants {
     public static final String TABLE_ARTIFACTS_POSITION="artifacts_position";
     public static final String TABLE_ARTIFACTS_HORIZONTAL_POSITION="horizontal";
     public static final String TABLE_ARTIFACTS_VERTICAL_POSITION="vertical";
-    public static final String TABLE_ARTIFACTS_NAME = "name";
-    public static final String TABLE_ARTIFACTS_ID = "id";
+    public static final String TABLE_ARTIFACTS_ID = "artifact_id";
+    public static final String TABLE_ARTIFACTS_GAMEBOARD_ID="gameboard_id";
     //endregion
 
     // region table Game boards

@@ -6,13 +6,15 @@ public class Artifact {
 
     private List<String > commands;
     private static int id;
+    protected int id_new;
 
     public Artifact(){
+        id_new = id;
         id++;
     }
 
     public int getId() {
-        return id;
+        return id_new;
     }
 
     public String getName() {
@@ -20,8 +22,10 @@ public class Artifact {
     }
 
     public Artifact(int id, String name){
+        id_new = id;
         id++;
-        this.id = id ;
+
+        //this.id = id ;
 
     }
 
