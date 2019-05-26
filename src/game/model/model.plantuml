@@ -38,67 +38,6 @@ title __MODEL's Class Diagram__\n
 
   package game {
     package game.model {
-      class Game {
-          - gameBoards : List<GameBoard>
-          - currentBoardIndex : int
-          + Game()
-          + placeOnBoard()
-          + removeFromBoard()
-          + movePlayer()
-          + displayBoard()
-          + getCurrentBoardIndex()
-          + getGameBoards()
-      }
-    }
-  }
-  
-
-  package game {
-    package game.model {
-      class GameBoard {
-          {static} - lastId : int
-          - uniqueId : int
-          - boardName : String
-          - boardSize : int
-          - gameBoardObjects : Object[][]
-          - connectedGameBoards : Map<GameBoard, List<Integer>>
-          - CELL_DISPLAY_SIZE : int
-          + GameBoard()
-          + placeOnBoard()
-          + removeFromBoard()
-          - generateSpaces()
-          - centerCell()
-          + toString()
-          + getBoardSize()
-          + getGameBoardObject()
-          + addConnectedBoard()
-          + isAPortalToOtherGameBoard()
-          + getPortalHorizontal()
-          + getPortalVertical()
-          + getConnectedGameBoards()
-          + getUniqueId()
-          + setUniqueId()
-          + getName()
-          + artifactHorizontalPosition()
-          + artifactVerticalPosition()
-          + getArtifactsPositions()
-      }
-    }
-  }
-  
-
-  package game {
-    package game.model {
-      class GameStrategy {
-          {static} - commandsMap : HashMap<String, List<String>>
-          {static} + processCommand()
-      }
-    }
-  }
-  
-
-  package game {
-    package game.model {
       interface ILocalizable {
           {abstract} + setPosition()
       }

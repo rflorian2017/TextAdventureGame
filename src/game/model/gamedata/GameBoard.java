@@ -1,4 +1,7 @@
-package game.model;
+package game.model.gamedata;
+
+import game.model.Artifact;
+import game.model.Player;
 
 import java.util.*;
 

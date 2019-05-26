@@ -2,6 +2,9 @@ package game.control;
 
 import game.helper.sql.*;
 import game.model.*;
+import game.model.gamedata.Game;
+import game.model.gamedata.GameBoard;
+import game.model.gamedata.GameStrategy;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;

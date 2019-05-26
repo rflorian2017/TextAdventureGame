@@ -2,7 +2,7 @@ package game.helper.sql;
 
 import game.constants.ApplicationConstants;
 import game.model.Artifact;
-import game.model.GameBoard;
+import game.model.gamedata.GameBoard;
 
 import java.sql.*;
 import java.util.ArrayList;

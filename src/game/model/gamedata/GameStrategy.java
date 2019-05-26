@@ -1,4 +1,6 @@
-package game.model;
+package game.model.gamedata;
+
+import game.model.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;

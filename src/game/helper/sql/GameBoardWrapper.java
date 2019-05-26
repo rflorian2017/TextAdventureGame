@@ -1,7 +1,7 @@
 package game.helper.sql;
 
 import game.constants.ApplicationConstants;
-import game.model.GameBoard;
+import game.model.gamedata.GameBoard;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

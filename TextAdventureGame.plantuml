@@ -60,7 +60,9 @@ title __TEXTADVENTUREGAME's Class Diagram__\n
 
   package game {
     package game.model {
-      class Game {
+      package game.model.gamedata {
+        class Game {
+        }
       }
     }
   }
@@ -68,7 +70,9 @@ title __TEXTADVENTUREGAME's Class Diagram__\n
 
   package game {
     package game.model {
-      class GameBoard {
+      package game.model.gamedata {
+        class GameBoard {
+        }
       }
     }
   }
@@ -84,7 +88,9 @@ title __TEXTADVENTUREGAME's Class Diagram__\n
 
   package game {
     package game.model {
-      class GameStrategy {
+      package game.model.gamedata {
+        class GameStrategy {
+        }
       }
     }
   }
