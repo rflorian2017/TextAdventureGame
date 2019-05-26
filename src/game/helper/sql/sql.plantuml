@@ -32,6 +32,7 @@ title __SQL's Class Diagram__\n
           - createTableGameBoards()
           + insert()
           + createTable()
+          + getAllGameBoards()
       }
     }
   }

@@ -28,19 +28,19 @@ public class ApplicationConstants {
 
 
     //region table artifacts
-    public static final String TABLE_GAME_ARTIFACTS="game_artifacts";
-    public static final String TABLE_GAME_ARTIFACTS_ID_COLUMN="id";
-    public static final String TABLE_GAME_ARTIFACTS_NAME_COLUMN="name";
-    public static final String TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN="collectible";
+    public static final String TABLE_GAME_ARTIFACTS = "game_artifacts";
+    public static final String TABLE_GAME_ARTIFACTS_ID_COLUMN = "id";
+    public static final String TABLE_GAME_ARTIFACTS_NAME_COLUMN = "name";
+    public static final String TABLE_GAME_ARTIFACTS_COLLECTIBLE_COLUMN = "collectible";
 
     //endregion
 
     //region table artifacts_position
-    public static final String TABLE_ARTIFACTS_POSITION="artifacts_position";
-    public static final String TABLE_ARTIFACTS_HORIZONTAL_POSITION="horizontal";
-    public static final String TABLE_ARTIFACTS_VERTICAL_POSITION="vertical";
+    public static final String TABLE_ARTIFACTS_POSITION = "artifacts_position";
+    public static final String TABLE_ARTIFACTS_HORIZONTAL_POSITION = "horizontal";
+    public static final String TABLE_ARTIFACTS_VERTICAL_POSITION = "vertical";
     public static final String TABLE_ARTIFACTS_ID = "artifact_id";
-    public static final String TABLE_ARTIFACTS_GAMEBOARD_ID="gameboard_id";
+    public static final String TABLE_ARTIFACTS_GAMEBOARD_ID = "gameboard_id";
     //endregion
 
     // region table Game boards
@@ -60,6 +60,13 @@ public class ApplicationConstants {
 
     // endregion
 
+    // region TABLE RELATED
+    public static final String TABLE_RELATED_BOARDS = "related_boards";
+    public static final String TABLE_RELATED_BOARDS_ID = "id";
+    public static final String TABLE_RELATED_BOARDS_MAP = "connected_with";
+    public static final String TABLE_RELATED_HORIZONTAL_CONNECTION = "horizontal_connection";
+    public static final String TABLE_RELATED_VERTICAL_CONNECTION = "vertical_connection";
+    // endregion
 
 
 }

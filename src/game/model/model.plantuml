@@ -11,7 +11,6 @@ title __MODEL's Class Diagram__\n
           + Artifact()
           + getId()
           + getName()
-          + Artifact()
           + toString()
       }
     }
@@ -31,6 +30,7 @@ title __MODEL's Class Diagram__\n
     package game.model {
       class Door {
           + Door()
+          + Door()
       }
     }
   }
@@ -48,6 +48,8 @@ title __MODEL's Class Diagram__\n
   package game {
     package game.model {
       class Key {
+          + Key()
+          + Key()
       }
     }
   }

@@ -103,6 +103,7 @@ public class Controller {
         GameBoardWrapper gameBoardWrapper = new GameBoardWrapper();
         ArtifactPositionWrapper artifactPositionWrapper = new ArtifactPositionWrapper();
         ArtifactWrapper artifactWrapper = new ArtifactWrapper();
+        ConnectedGameBoardsWrapper connectedGameBoardsWrapper = new ConnectedGameBoardsWrapper();
 
         for(int i=0; i<game.getGameBoards().size(); i++) {
             GameBoard gameBoard = game.getGameBoards().get(i);
@@ -112,6 +113,8 @@ public class Controller {
                 artifactWrapper.insert(entry.getKey());
                 artifactPositionWrapper.insert(entry.getKey(), gameBoard);
             }
+
+            connectedGameBoardsWrapper.insertRelatedBoards(gameBoard);
 
         }
 

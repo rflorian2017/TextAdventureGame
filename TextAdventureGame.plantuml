@@ -19,6 +19,16 @@ title __TEXTADVENTUREGAME's Class Diagram__\n
   
 
   package game {
+    package game.model {
+      package game.model.factory {
+        class ArtifactFactory {
+        }
+      }
+    }
+  }
+  
+
+  package game {
     package game.helper.sql {
       class ArtifactPositionWrapper {
       }

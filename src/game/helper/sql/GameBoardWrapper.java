@@ -21,14 +21,16 @@ public class GameBoardWrapper extends SqliteWrapper {
     public void insert(GameBoard gameBoard) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_GAME_BOARDS +
                 "(" +
+                ApplicationConstants.TABLE_GAME_BOARDS_ID_COLUMN + "," +
                 ApplicationConstants.TABLE_GAME_BOARDS_NAME_COLUMN + "," +
                 ApplicationConstants.TABLE_GAME_BOARDS_SIZE_COLUMN + ")" +
-                "VALUES(?,?);";
+                "VALUES(?,?,?);";
         try {
             Connection conn = this.connect();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, gameBoard.getName());
-            statement.setInt(2, gameBoard.getBoardSize());
+            statement.setInt(1, gameBoard.getUniqueId());
+            statement.setString(2, gameBoard.getName());
+            statement.setInt(3, gameBoard.getBoardSize());
             statement.executeUpdate();
 
         } catch (SQLException e) {

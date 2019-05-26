@@ -1,12 +1,15 @@
 package game.model.gamedata;
 
 
+import game.helper.sql.ConnectedGameBoardsWrapper;
 import game.helper.sql.GameBoardWrapper;
 import game.model.CollectibleItem;
 import game.model.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
     private List<GameBoard> gameBoards;
@@ -20,8 +23,10 @@ public class Game {
         //COMPLETED: load game boards
         // get gameboards from Database
         GameBoardWrapper gameBoardWrapper = new GameBoardWrapper();
+        ConnectedGameBoardsWrapper connectedGameBoardsWrapper = new ConnectedGameBoardsWrapper();
 
         gameBoards = gameBoardWrapper.getAllGameBoards();
+        Map<Integer, List<Integer>> relatedBoards =  connectedGameBoardsWrapper.getAllRelatedGameBoards();
 
         if(gameBoards.size() == 0) {
             //just for tests - COMPLETED: remove in production
@@ -37,6 +42,14 @@ public class Game {
             currentBoardIndex = 0;
         }
         else  {
+            if(relatedBoards.size() > 0) {
+                for (GameBoard gameb: gameBoards
+                     ) {
+                    if(relatedBoards.containsKey(gameb.getUniqueId())) {
+                        //gameb.addConnectedBoard(gameBoards.get(relatedBoards.get(gameb.getUniqueId()).get(0)));
+                    }
+                }
+            }
 
         }
     }

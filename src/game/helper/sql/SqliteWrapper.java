@@ -6,6 +6,8 @@ import java.sql.*;
 
 public abstract class SqliteWrapper {
 
+    //TODO : update statement, when the record already exists: e.g. UPDATE WHERE ID = ?
+
     protected Connection connect() {
         // connect to the database
         Connection conn = null;

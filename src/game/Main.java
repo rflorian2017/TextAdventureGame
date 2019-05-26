@@ -28,10 +28,12 @@ public class Main extends Application {
         GameBoardWrapper gameBoardWrapper = new GameBoardWrapper();
         ArtifactPositionWrapper artifactPositionWrapper = new ArtifactPositionWrapper();
         ArtifactWrapper artifactWrapper = new ArtifactWrapper();
+        ConnectedGameBoardsWrapper connectedGameBoardsWrapper = new ConnectedGameBoardsWrapper();
         playerWrapper.createTable();
         gameBoardWrapper.createTable();
         artifactPositionWrapper.createTable();
         artifactWrapper.createTable();
+        connectedGameBoardsWrapper.createTable();
 
         launch(args);
     }
