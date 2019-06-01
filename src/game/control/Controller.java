@@ -105,6 +105,12 @@ public class Controller {
         ArtifactWrapper artifactWrapper = new ArtifactWrapper();
         ConnectedGameBoardsWrapper connectedGameBoardsWrapper = new ConnectedGameBoardsWrapper();
 
+        playerWrapper.delete();
+        gameBoardWrapper.delete();
+        artifactPositionWrapper.delete();
+        artifactWrapper.delete();
+        connectedGameBoardsWrapper.delete();
+
         for(int i=0; i<game.getGameBoards().size(); i++) {
             GameBoard gameBoard = game.getGameBoards().get(i);
             gameBoardWrapper.insert(gameBoard);

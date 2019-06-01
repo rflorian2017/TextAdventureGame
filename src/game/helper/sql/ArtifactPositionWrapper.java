@@ -42,6 +42,17 @@ public class ArtifactPositionWrapper extends SqliteWrapper {
         }
     }
 
+    public void delete() {
+        String sql = "DELETE * FROM " + ApplicationConstants.TABLE_ARTIFACTS_POSITION ;
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public Map<Integer, List<Integer>> getAllArtifactsPositions() {
         String sql = "SELECT * FROM " + ApplicationConstants.TABLE_ARTIFACTS_POSITION ;
         List<Artifact> artifacts = new ArrayList<>();

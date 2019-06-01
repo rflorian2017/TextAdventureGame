@@ -24,6 +24,17 @@ public class ArtifactWrapper extends SqliteWrapper {
         createTable(sql);
     }
 
+    public void delete() {
+        String sql = "DELETE * FROM " +  ApplicationConstants.TABLE_GAME_ARTIFACTS ;
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void insert(Artifact artifact) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_GAME_ARTIFACTS +
                 "(" + ApplicationConstants.TABLE_GAME_ARTIFACTS_ID_COLUMN + ","

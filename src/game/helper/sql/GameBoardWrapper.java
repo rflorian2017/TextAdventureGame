@@ -18,6 +18,20 @@ public class GameBoardWrapper extends SqliteWrapper {
         createTable(sql);
     }
 
+    public void delete() {
+        String sql = "DELETE * FROM " + ApplicationConstants.TABLE_GAME_BOARDS ;
+
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void insert(GameBoard gameBoard) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_GAME_BOARDS +
                 "(" +

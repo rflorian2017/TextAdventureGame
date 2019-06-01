@@ -29,6 +29,17 @@ public class ConnectedGameBoardsWrapper extends SqliteWrapper {
     }
 
 
+    public void delete() {
+        String sql = "DELETE * FROM " +  ApplicationConstants.TABLE_RELATED_BOARDS ;
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void insertRelatedBoards(GameBoard gameBoard) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_RELATED_BOARDS +
                 "(" + ApplicationConstants.TABLE_RELATED_BOARDS_ID + "," +

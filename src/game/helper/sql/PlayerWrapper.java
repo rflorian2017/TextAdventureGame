@@ -10,6 +10,20 @@ import java.util.List;
 
 public class PlayerWrapper extends SqliteWrapper {
 
+    public void delete() {
+        String sql = "DELETE * FROM " + ApplicationConstants.TABLE_PLAYERS ;
+
+        try {
+            Connection conn = this.connect();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void insert(Player player, int gameBoardId) {
         String sql = "INSERT INTO " + ApplicationConstants.TABLE_PLAYERS +
                 "(" + ApplicationConstants.TABLE_PLAYER_NAME_COLUMN + ","
