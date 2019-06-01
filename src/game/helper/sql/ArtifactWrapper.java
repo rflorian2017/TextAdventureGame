@@ -25,7 +25,7 @@ public class ArtifactWrapper extends SqliteWrapper {
     }
 
     public void delete() {
-        String sql = "DELETE * FROM " +  ApplicationConstants.TABLE_GAME_ARTIFACTS ;
+        String sql = "DELETE FROM " +  ApplicationConstants.TABLE_GAME_ARTIFACTS ;
         try {
             Connection conn = this.connect();
             PreparedStatement statement = conn.prepareStatement(sql);

@@ -7,6 +7,7 @@ title __SQL's Class Diagram__\n
       class ArtifactPositionWrapper {
           - createArtifactsPosition()
           + insert()
+          + delete()
           + getAllArtifactsPositions()
           + createTable()
       }
@@ -18,6 +19,7 @@ title __SQL's Class Diagram__\n
     package game.helper.sql {
       class ArtifactWrapper {
           - createTableArtifacts()
+          + delete()
           + insert()
           + getAllArtifacts()
           + createTable()
@@ -28,8 +30,22 @@ title __SQL's Class Diagram__\n
 
   package game {
     package game.helper.sql {
+      class ConnectedGameBoardsWrapper {
+          - createTableRelated()
+          + createTable()
+          + delete()
+          + insertRelatedBoards()
+          + getAllRelatedGameBoards()
+      }
+    }
+  }
+  
+
+  package game {
+    package game.helper.sql {
       class GameBoardWrapper {
           - createTableGameBoards()
+          + delete()
           + insert()
           + createTable()
           + getAllGameBoards()
@@ -41,6 +57,7 @@ title __SQL's Class Diagram__\n
   package game {
     package game.helper.sql {
       class PlayerWrapper {
+          + delete()
           + insert()
           - createTablePlayers()
           + getAllPlayers()
@@ -64,6 +81,7 @@ title __SQL's Class Diagram__\n
 
   ArtifactPositionWrapper -up-|> SqliteWrapper
   ArtifactWrapper -up-|> SqliteWrapper
+  ConnectedGameBoardsWrapper -up-|> SqliteWrapper
   GameBoardWrapper -up-|> SqliteWrapper
   PlayerWrapper -up-|> SqliteWrapper
 

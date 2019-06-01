@@ -30,6 +30,11 @@ title __CONSTANTS's Class Diagram__\n
           {static} + TABLE_PLAYER_GAMEBOARD_ID : String
           {static} + TABLE_PLAYER_HORIZONTAL : String
           {static} + TABLE_PLAYER_VERTICAL : String
+          {static} + TABLE_RELATED_BOARDS : String
+          {static} + TABLE_RELATED_BOARDS_ID : String
+          {static} + TABLE_RELATED_BOARDS_MAP : String
+          {static} + TABLE_RELATED_HORIZONTAL_CONNECTION : String
+          {static} + TABLE_RELATED_VERTICAL_CONNECTION : String
       }
     }
   }

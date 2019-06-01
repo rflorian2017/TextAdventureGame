@@ -56,16 +56,14 @@ public class Controller {
         }
 
         else {
-            for (Player player_: players
-                 ) {
-                game.placeOnBoard(player_, player_.getHorizontal(),
-                        player_.getVertical());
-            }
+
+            player = players.get(0);
+            // only one player in database
+           // player.setPosition(players.get(0).getHorizontal(), players.get(0).getVertical());
+            game.setCurrentBoardIndex(player.getCurrentGameBoard());
+            game.placeOnBoard(player, player.getHorizontal(),
+                    player.getVertical());
         }
-
-
-
-
 
         System.out.println(game.displayBoard());
         txtAreaGameOutput.appendText(game.displayBoard() + "\n");

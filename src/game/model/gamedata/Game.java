@@ -46,7 +46,9 @@ public class Game {
                 for (GameBoard gameb: gameBoards
                      ) {
                     if(relatedBoards.containsKey(gameb.getUniqueId())) {
-                        //gameb.addConnectedBoard(gameBoards.get(relatedBoards.get(gameb.getUniqueId()).get(0)));
+                        gameb.addConnectedBoard(getGameBoard(relatedBoards.get(gameb.getUniqueId()).get(0)),
+                                relatedBoards.get(gameb.getUniqueId()).get(1),
+                                relatedBoards.get(gameb.getUniqueId()).get(2));
                     }
                 }
             }
@@ -54,6 +56,16 @@ public class Game {
         }
     }
 
+    public GameBoard getGameBoard(int gameBoardUniqueId) {
+        for (GameBoard gameBoard: gameBoards
+             ) {
+            if(gameBoard.getUniqueId() == gameBoardUniqueId) {
+                return gameBoard;
+            }
+        }
+
+        return null; // should never reach null
+    }
 
     /**
      * This method will add an object to the board in the given position
@@ -151,6 +163,10 @@ public class Game {
 
     public int getCurrentBoardIndex() {
         return currentBoardIndex;
+    }
+
+    public void setCurrentBoardIndex(int currentBoardIndex) {
+        this.currentBoardIndex = currentBoardIndex;
     }
 
     public List<GameBoard> getGameBoards() {

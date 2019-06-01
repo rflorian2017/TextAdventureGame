@@ -53,6 +53,14 @@ title __TEXTADVENTUREGAME's Class Diagram__\n
   
 
   package game {
+    package game.helper.sql {
+      class ConnectedGameBoardsWrapper {
+      }
+    }
+  }
+  
+
+  package game {
     package game.control {
       class Controller {
       }
@@ -154,6 +162,7 @@ title __TEXTADVENTUREGAME's Class Diagram__\n
 
   ArtifactPositionWrapper -up-|> SqliteWrapper
   ArtifactWrapper -up-|> SqliteWrapper
+  ConnectedGameBoardsWrapper -up-|> SqliteWrapper
   Controller o-- Game : game
   Controller o-- Player : player
   Door -up-|> Artifact

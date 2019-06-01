@@ -19,7 +19,7 @@ public class GameBoardWrapper extends SqliteWrapper {
     }
 
     public void delete() {
-        String sql = "DELETE * FROM " + ApplicationConstants.TABLE_GAME_BOARDS ;
+        String sql = "DELETE FROM " + ApplicationConstants.TABLE_GAME_BOARDS ;
 
         try {
             Connection conn = this.connect();

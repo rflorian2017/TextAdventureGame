@@ -17,7 +17,17 @@ public class Player implements ILocalizable {
 
     private int ID;
 
+    private int currentGameBoard;
+
     private String name;
+
+    public int getCurrentGameBoard() {
+        return currentGameBoard;
+    }
+
+    public void setCurrentGameBoard(int currentGameBoard) {
+        this.currentGameBoard = currentGameBoard;
+    }
 
     public Player(String name, int ID) {
         this.name = name;

@@ -11,7 +11,7 @@ import java.util.List;
 public class PlayerWrapper extends SqliteWrapper {
 
     public void delete() {
-        String sql = "DELETE * FROM " + ApplicationConstants.TABLE_PLAYERS ;
+        String sql = "DELETE FROM " + ApplicationConstants.TABLE_PLAYERS ;
 
         try {
             Connection conn = this.connect();
@@ -72,6 +72,7 @@ public class PlayerWrapper extends SqliteWrapper {
                         resultSet.getInt(ApplicationConstants.TABLE_PLAYER_ID_COLUMN));
                 player.setPosition(resultSet.getInt(ApplicationConstants.TABLE_PLAYER_HORIZONTAL),
                         resultSet.getInt(ApplicationConstants.TABLE_PLAYER_VERTICAL));
+                player.setCurrentGameBoard(resultSet.getInt(ApplicationConstants.TABLE_PLAYER_GAMEBOARD_ID));
                 players.add(player
                 );
             }
