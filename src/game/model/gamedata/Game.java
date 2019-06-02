@@ -77,9 +77,9 @@ public class Game {
      * or throw ArrayIndexOutOfBoundsException if the positions are outside the limits of
      * the board
      */
-    public boolean placeOnBoard(Object obj, int horizontal, int vertical) {
+    public boolean placeOnBoard(Object obj, int horizontal, int vertical, int gameBoardId) {
 
-        return gameBoards.get(currentBoardIndex).placeOnBoard(obj, horizontal, vertical);
+        return gameBoards.get(gameBoardId).placeOnBoard(obj, horizontal, vertical);
     }
 
     /**

@@ -6,10 +6,15 @@ import game.model.gamedata.Game;
 import game.model.gamedata.GameBoard;
 import game.model.gamedata.GameStrategy;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +24,9 @@ public class Controller {
 
     public TextField txtFieldCommand;
     public TextArea txtAreaGameOutput;
+    public Pane rootPane;
+    public ProgressBar progressBar;
+    public ProgressIndicator progressIndicator;
 
     private Game game;
     private Player player;
@@ -26,65 +34,47 @@ public class Controller {
     public void initialize() {
         game = new Game();
 
+        progressBar.setProgress(0.5);
 
         List<Artifact> artifacts = new ArtifactWrapper().getAllArtifacts();
         Map<Integer, List<Integer>> artifactsPositions =
                 new ArtifactPositionWrapper().getAllArtifactsPositions();
-         if(artifacts.size() == 0) {
+
+        Map<Integer, Integer> artifactsGameBorads = new ArtifactPositionWrapper().getAllArtifactsGameboardsMap();
+        if (artifacts.size() == 0) {
             Key key = new Key();
             Door door = new Door(key);
 
-            game.placeOnBoard(key, 2, 3);
-            game.placeOnBoard(door, 1, 5);
+            game.placeOnBoard(key, 2, 3, 0);
+            game.placeOnBoard(door, 1, 5, 0);
 
-        }
-
-        else {
+        } else {
             for (Artifact artifact : artifacts
-                 ) {
+            ) {
                 game.placeOnBoard(artifact,
                         artifactsPositions.get(artifact.getId()).get(1),
-                        artifactsPositions.get(artifact.getId()).get(0));
+                        artifactsPositions.get(artifact.getId()).get(0),
+                        artifactsGameBorads.get(artifact.getId()));
             }
         }
 
         List<Player> players = new PlayerWrapper().getAllPlayers();
-        if(players.size() == 0) {
+        if (players.size() == 0) {
 
             player = new Player();
-            game.placeOnBoard(player, 5, 5);
-        }
-
-        else {
+            game.placeOnBoard(player, 5, 5, 0);
+        } else {
 
             player = players.get(0);
             // only one player in database
-           // player.setPosition(players.get(0).getHorizontal(), players.get(0).getVertical());
+            // player.setPosition(players.get(0).getHorizontal(), players.get(0).getVertical());
             game.setCurrentBoardIndex(player.getCurrentGameBoard());
             game.placeOnBoard(player, player.getHorizontal(),
-                    player.getVertical());
+                    player.getVertical(), player.getCurrentGameBoard());
         }
 
         System.out.println(game.displayBoard());
         txtAreaGameOutput.appendText(game.displayBoard() + "\n");
-
-//        game.removeFromBoard(2, 3);
-//        System.out.println(game.displayBoard());
-//        txtAreaGameOutput.appendText(game.displayBoard());
-//
-//        game.placeOnBoard(key, 2, 3);
-//        System.out.println(player.getArtifacts());
-//        game.movePlayer(player, 2,3);
-//        System.out.println(game.displayBoard());
-//        txtAreaGameOutput.appendText(game.displayBoard());
-//        System.out.println(player.getArtifacts());
-//        txtAreaGameOutput.appendText(player.getArtifacts());
-//
-//        game.movePlayer(player, 1,5);
-//        System.out.println(game.displayBoard());
-//        txtAreaGameOutput.appendText(game.displayBoard());
-//        System.out.println(player.getArtifacts());
-//        txtAreaGameOutput.appendText(player.getArtifacts());
 
     }
 
@@ -92,6 +82,9 @@ public class Controller {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             GameStrategy.processCommand(txtFieldCommand.getText(), game, player);
             txtFieldCommand.clear();
+            txtAreaGameOutput.appendText(game.displayBoard() + "\n");
+        } else {
+            GameStrategy.processArrowCommand(keyEvent, game, player);
             txtAreaGameOutput.appendText(game.displayBoard() + "\n");
         }
     }
@@ -109,11 +102,10 @@ public class Controller {
         artifactWrapper.delete();
         connectedGameBoardsWrapper.delete();
 
-        for(int i=0; i<game.getGameBoards().size(); i++) {
+        for (int i = 0; i < game.getGameBoards().size(); i++) {
             GameBoard gameBoard = game.getGameBoards().get(i);
             gameBoardWrapper.insert(gameBoard);
-            for (Map.Entry<Artifact, List<Integer>> entry : gameBoard.getArtifactsPositions().entrySet())
-            {
+            for (Map.Entry<Artifact, List<Integer>> entry : gameBoard.getArtifactsPositions().entrySet()) {
                 artifactWrapper.insert(entry.getKey());
                 artifactPositionWrapper.insert(entry.getKey(), gameBoard);
             }
@@ -125,5 +117,10 @@ public class Controller {
         playerWrapper.insert(player, game.getCurrentBoardIndex());
 
 
+    }
+
+    @FXML
+    public void exitApplication(ActionEvent event) {
+        ((Stage) rootPane.getScene().getWindow()).close();
     }
 }

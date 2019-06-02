@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -8,12 +11,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<?import javafx.scene.control.Button?>
 <BorderPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.control.Controller">
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" text="Command" />
                   <TextField fx:id="txtFieldCommand" layoutX="14.0" layoutY="37.0" onKeyReleased="#processCommand" prefHeight="25.0" prefWidth="581.0" />
@@ -23,7 +25,9 @@
                         <TextArea fx:id="txtAreaGameOutput" editable="false" prefHeight="492.0" prefWidth="767.0" />
                      </content>
                   </ScrollPane>
-                  <Button fx:id="saveBtn" layoutX="677.0" layoutY="37.0" mnemonicParsing="false" onAction="#saveGameProgress" text="SAVE" />
+                  <Button fx:id="saveBtn" layoutX="606.0" layoutY="37.0" mnemonicParsing="false" onAction="#saveGameProgress" text="SAVE" />
+                  <ProgressBar fx:id="progressBar" layoutX="69.0" layoutY="69.0" prefWidth="200.0" progress="0.0" />
+                  <ProgressIndicator fx:id="progressIndicator" layoutX="666.0" layoutY="30.0" progress="0.0" />
                </children>
             </Pane>
          </children>

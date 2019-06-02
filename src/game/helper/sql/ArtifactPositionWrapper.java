@@ -53,6 +53,25 @@ public class ArtifactPositionWrapper extends SqliteWrapper {
         }
     }
 
+    public HashMap<Integer, Integer> getAllArtifactsGameboardsMap() {
+        String sql = "SELECT * FROM " + ApplicationConstants.TABLE_ARTIFACTS_POSITION;
+        HashMap<Integer, Integer> artifactsIdGameBoardId = new HashMap<>();
+        Connection conn = this.connect();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                artifactsIdGameBoardId.put(resultSet.getInt(ApplicationConstants.TABLE_ARTIFACTS_ID),
+                        resultSet.getInt(ApplicationConstants.TABLE_ARTIFACTS_GAMEBOARD_ID));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return artifactsIdGameBoardId;
+    }
+
     public Map<Integer, List<Integer>> getAllArtifactsPositions() {
         String sql = "SELECT * FROM " + ApplicationConstants.TABLE_ARTIFACTS_POSITION ;
         List<Artifact> artifacts = new ArrayList<>();

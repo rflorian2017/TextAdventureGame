@@ -1,6 +1,8 @@
 package game.model.gamedata;
 
 import game.model.Player;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,5 +70,28 @@ public class GameStrategy {
             }
         }
 
+    }
+
+    public static void processArrowCommand(KeyEvent e, Game game, Player player) {
+        KeyCode keyCode = e.getCode();
+        switch( keyCode ) {
+            case UP:
+                // handle up
+                game.movePlayer(player, player.getHorizontal() - 1, player.getVertical());
+                break;
+            case DOWN:
+                // handle down
+                game.movePlayer(player, player.getHorizontal() + 1, player.getVertical());
+                break;
+            case LEFT:
+                // handle left
+                game.movePlayer(player, player.getHorizontal(), player.getVertical() - 1);
+                break;
+            case RIGHT :
+                // handle right
+                game.movePlayer(player, player.getHorizontal(),
+                        player.getVertical() + 1);
+                break;
+        }
     }
 }
