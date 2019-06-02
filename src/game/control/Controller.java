@@ -2,15 +2,15 @@ package game.control;
 
 import game.helper.sql.*;
 import game.model.*;
+import game.model.Thread.DisplayFileName;
 import game.model.gamedata.Game;
 import game.model.gamedata.GameBoard;
 import game.model.gamedata.GameStrategy;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Controller {
 
@@ -27,6 +28,8 @@ public class Controller {
     public Pane rootPane;
     public ProgressBar progressBar;
     public ProgressIndicator progressIndicator;
+    public Button btnStart;
+    private DisplayFileName displayFileNameTask;
 
     private Game game;
     private Player player;
@@ -35,6 +38,7 @@ public class Controller {
         game = new Game();
 
         progressBar.setProgress(0.5);
+        progressIndicator.setProgress(0.2);
 
         List<Artifact> artifacts = new ArtifactWrapper().getAllArtifacts();
         Map<Integer, List<Integer>> artifactsPositions =
@@ -90,37 +94,76 @@ public class Controller {
     }
 
     public void saveGameProgress(ActionEvent event) {
-        PlayerWrapper playerWrapper = new PlayerWrapper();
-        GameBoardWrapper gameBoardWrapper = new GameBoardWrapper();
-        ArtifactPositionWrapper artifactPositionWrapper = new ArtifactPositionWrapper();
-        ArtifactWrapper artifactWrapper = new ArtifactWrapper();
-        ConnectedGameBoardsWrapper connectedGameBoardsWrapper = new ConnectedGameBoardsWrapper();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm saving");
+        alert.setHeaderText("Are you sure you want to save?");
+        alert.setContentText("Really , really ?");
 
-        playerWrapper.delete();
-        gameBoardWrapper.delete();
-        artifactPositionWrapper.delete();
-        artifactWrapper.delete();
-        connectedGameBoardsWrapper.delete();
+        ButtonType buttonTypeYes =  new ButtonType("Yes");
+        ButtonType buttonTypeNo =  new ButtonType("No");
 
-        for (int i = 0; i < game.getGameBoards().size(); i++) {
-            GameBoard gameBoard = game.getGameBoards().get(i);
-            gameBoardWrapper.insert(gameBoard);
-            for (Map.Entry<Artifact, List<Integer>> entry : gameBoard.getArtifactsPositions().entrySet()) {
-                artifactWrapper.insert(entry.getKey());
-                artifactPositionWrapper.insert(entry.getKey(), gameBoard);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == buttonTypeYes) {
+            PlayerWrapper playerWrapper = new PlayerWrapper();
+            GameBoardWrapper gameBoardWrapper = new GameBoardWrapper();
+            ArtifactPositionWrapper artifactPositionWrapper = new ArtifactPositionWrapper();
+            ArtifactWrapper artifactWrapper = new ArtifactWrapper();
+            ConnectedGameBoardsWrapper connectedGameBoardsWrapper = new ConnectedGameBoardsWrapper();
+
+            playerWrapper.delete();
+            gameBoardWrapper.delete();
+            artifactPositionWrapper.delete();
+            artifactWrapper.delete();
+            connectedGameBoardsWrapper.delete();
+
+            for (int i = 0; i < game.getGameBoards().size(); i++) {
+                GameBoard gameBoard = game.getGameBoards().get(i);
+                gameBoardWrapper.insert(gameBoard);
+                for (Map.Entry<Artifact, List<Integer>> entry : gameBoard.getArtifactsPositions().entrySet()) {
+                    artifactWrapper.insert(entry.getKey());
+                    artifactPositionWrapper.insert(entry.getKey(), gameBoard);
+                }
+
+                connectedGameBoardsWrapper.insertRelatedBoards(gameBoard);
+
             }
 
-            connectedGameBoardsWrapper.insertRelatedBoards(gameBoard);
+            playerWrapper.insert(player, game.getCurrentBoardIndex());
 
         }
 
-        playerWrapper.insert(player, game.getCurrentBoardIndex());
-
-
+        else {
+            // do nothing
+        }
     }
 
     @FXML
     public void exitApplication(ActionEvent event) {
         ((Stage) rootPane.getScene().getWindow()).close();
+    }
+
+    public void startThread(ActionEvent event) {
+        displayFileNameTask = new DisplayFileName();
+
+
+        progressBar.progressProperty().bind(displayFileNameTask.progressProperty());
+        progressIndicator.progressProperty().bind(displayFileNameTask.progressProperty());
+
+        txtAreaGameOutput.textProperty().unbind();
+        txtAreaGameOutput.textProperty().bind(displayFileNameTask.messageProperty());
+
+        displayFileNameTask.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED,
+                event1 -> {
+                    txtAreaGameOutput.textProperty().unbind();
+                    txtAreaGameOutput.setText("finished");
+                });
+        // Start the Task.
+        new Thread(displayFileNameTask).start();
+    }
+
+    public void cancelTask(ActionEvent event) {
+        displayFileNameTask.cancel(true);
     }
 }

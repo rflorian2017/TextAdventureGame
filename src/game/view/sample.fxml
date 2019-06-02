@@ -27,7 +27,9 @@
                   </ScrollPane>
                   <Button fx:id="saveBtn" layoutX="606.0" layoutY="37.0" mnemonicParsing="false" onAction="#saveGameProgress" text="SAVE" />
                   <ProgressBar fx:id="progressBar" layoutX="69.0" layoutY="69.0" prefWidth="200.0" progress="0.0" />
-                  <ProgressIndicator fx:id="progressIndicator" layoutX="666.0" layoutY="30.0" progress="0.0" />
+                  <ProgressIndicator fx:id="progressIndicator" layoutX="717.0" layoutY="49.0" progress="0.0" />
+                  <Button fx:id="btnStart" layoutX="424.0" layoutY="66.0" mnemonicParsing="false" onAction="#startThread" text="Start" />
+                  <Button layoutX="471.0" layoutY="66.0" mnemonicParsing="false" onAction="#cancelTask" text="Cancel" />
                </children>
             </Pane>
          </children>
