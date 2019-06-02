@@ -11,4 +11,8 @@ public class Door extends Artifact {
         super();
         this.doorKey = doorKey;
     }
+
+    public boolean matchKey(Key key) {
+        return key.equals(this.doorKey);
+    }
 }

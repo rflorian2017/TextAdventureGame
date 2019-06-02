@@ -160,6 +160,14 @@ title __TEXTADVENTUREGAME's Class Diagram__\n
   }
   
 
+  package game {
+    package game.model {
+      class Tree {
+      }
+    }
+  }
+  
+
   ArtifactPositionWrapper -up-|> SqliteWrapper
   ArtifactWrapper -up-|> SqliteWrapper
   ConnectedGameBoardsWrapper -up-|> SqliteWrapper
@@ -171,8 +179,10 @@ title __TEXTADVENTUREGAME's Class Diagram__\n
   Key -up-|> CollectibleItem
   Key -up-|> Artifact
   Main -up-|> Application
+  Main o-- Controller : controller
   Player -up-|> ILocalizable
   PlayerWrapper -up-|> SqliteWrapper
+  Tree -up-|> Artifact
 
 
 right footer

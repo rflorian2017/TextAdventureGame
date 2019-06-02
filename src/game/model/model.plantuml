@@ -61,10 +61,13 @@ title __MODEL's Class Diagram__\n
           - horizontal : int
           - vertical : int
           - ID : int
+          - currentGameBoard : int
           - name : String
           - artifacts : List<CollectibleItem>
           + getHorizontal()
           + getVertical()
+          + getCurrentGameBoard()
+          + setCurrentGameBoard()
           + Player()
           + getName()
           + getID()
@@ -77,11 +80,22 @@ title __MODEL's Class Diagram__\n
   }
   
 
+  package game {
+    package game.model {
+      class Tree {
+          + Tree()
+          + Tree()
+      }
+    }
+  }
+  
+
   Door -up-|> Artifact
   Door o-- Key : doorKey
   Key -up-|> CollectibleItem
   Key -up-|> Artifact
   Player -up-|> ILocalizable
+  Tree -up-|> Artifact
 
 
 right footer

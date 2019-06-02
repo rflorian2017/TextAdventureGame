@@ -9,11 +9,13 @@ title __GAMEDATA's Class Diagram__\n
             - gameBoards : List<GameBoard>
             - currentBoardIndex : int
             + Game()
+            + getGameBoard()
             + placeOnBoard()
             + removeFromBoard()
             + movePlayer()
             + displayBoard()
             + getCurrentBoardIndex()
+            + setCurrentBoardIndex()
             + getGameBoards()
         }
       }
@@ -63,6 +65,7 @@ title __GAMEDATA's Class Diagram__\n
         class GameStrategy {
             {static} - commandsMap : HashMap<String, List<String>>
             {static} + processCommand()
+            {static} + processArrowCommand()
         }
       }
     }

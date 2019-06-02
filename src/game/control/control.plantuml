@@ -7,9 +7,13 @@ title __CONTROL's Class Diagram__\n
       class Controller {
           + txtFieldCommand : TextField
           + txtAreaGameOutput : TextArea
+          + rootPane : Pane
+          + progressBar : ProgressBar
+          + progressIndicator : ProgressIndicator
           + initialize()
           + processCommand()
           + saveGameProgress()
+          + exitApplication()
       }
     }
   }

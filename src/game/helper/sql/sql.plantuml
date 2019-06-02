@@ -8,6 +8,7 @@ title __SQL's Class Diagram__\n
           - createArtifactsPosition()
           + insert()
           + delete()
+          + getAllArtifactsGameboardsMap()
           + getAllArtifactsPositions()
           + createTable()
       }
