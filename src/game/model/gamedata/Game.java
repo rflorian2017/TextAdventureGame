@@ -32,11 +32,15 @@ public class Game {
             //just for tests - COMPLETED: remove in production
             GameBoard gameBoardForest = new GameBoard("forest", 10);
             GameBoard gameBoardDungeon = new GameBoard("dungeon", 9);
+            GameBoard gameBoardRoom = new GameBoard("room", 5);
 
             gameBoards.add(gameBoardForest);
             gameBoards.add(gameBoardDungeon);
+            gameBoards.add(gameBoardRoom);
 
             gameBoardDungeon.addConnectedBoard(gameBoardForest, 0, 4);
+            gameBoardDungeon.addConnectedBoard(gameBoardRoom, 9, 0);
+            gameBoardRoom.addConnectedBoard(gameBoardDungeon, 4, 4);
             gameBoardForest.addConnectedBoard(gameBoardDungeon, 9, 9);
 
             currentBoardIndex = 0;
