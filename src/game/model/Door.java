@@ -15,4 +15,7 @@ public class Door extends Artifact {
     public boolean matchKey(Key key) {
         return key.equals(this.doorKey);
     }
+
+    //TODO : match key with current door
+    // TODO: possibility to lock and unlock door
 }

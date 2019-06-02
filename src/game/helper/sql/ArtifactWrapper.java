@@ -81,4 +81,10 @@ public class ArtifactWrapper extends SqliteWrapper {
     public void createTable() {
         createTableArtifacts();
     }
+
+
+    // TODO: create table to hold key door pairs -> CREATE table
+    // TODO: get links between key and door -> SELECT
+    // TODO: insert the link into DB -> INSERT
+    // TODO : clear for saving progress -> DELETE
 }

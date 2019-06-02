@@ -101,6 +101,8 @@ public class Game {
      * @param vertical   position
      *                   return true if you can move
      */
+
+
     public boolean movePlayer(Player player, int horizontal, int vertical) {
 
         //TODO: Allow player and collectible to be on the same box
@@ -173,5 +175,7 @@ public class Game {
         return gameBoards;
     }
 
+
+    // TODO: move player and provide a question to unlock door/ collect items / interract
 
 }
